@@ -9,12 +9,12 @@ import Heart from "./Heart";
 
 import "./App.css";
 
-const getRntInteger =(min, max)=>{
-  return Math.floor(Math.random()*(max-min))+min;
-}
-
 let clickSound = new Audio(click);
 let startGameSound = new Audio(startgame);
+
+const getRntInteger = (min, max)=>{
+  return Math.floor(Math.random()*(max-min+1)) + min ;
+}
 
 class App extends Component {
   state={
@@ -32,10 +32,11 @@ class App extends Component {
     totalLives:3,
   }
   lives = 3;
-timer;
+  timer;
 
 changeHandler=(i) => {
   clickSound.play();
+  
 if (this.state.current !== i){
   return this.stopHandler("Wrong Click");
   ;
@@ -46,26 +47,23 @@ if (this.state.current !== i){
 
   });
   this.lives = this.lives +1;
+  console.log("clicked");
 };
 
-nextCircle=()=>{
-  
+nextCircle=()=>{ 
  if (this.state.totalLives!==this.lives){
   return this.setState({
-
     totalLives:this.lives,
-    // mistake:this.state.mistake +1, 
-    // score:this.state.score -1,
    }) ;
  }
- if (this.lives ===0){
-  this.stopHandler("Ohh! out of lives");
+ if (this.lives === 0){
+   return this.stopHandler("Ohh! out of lives");
  }
  
  let nextActive;
 
   do{
-    nextActive=getRntInteger(0,this.state.circles.length-1)
+    nextActive=getRntInteger(0,this.state.circles.length-1);
   }while(nextActive === this.state.current);
 
   this.setState({
@@ -74,23 +72,26 @@ nextCircle=()=>{
     round:this.state.round + 1,
   })
   this.lives = this.lives -1;
-  this.timer=setTimeout(this.nextCircle,this.state.pace);
-  
+  this.timer=setTimeout(this.nextCircle,this.state.pace); 
 };
 
 startHandler=()=>{
   this.nextCircle();
-  this.setState({gameOn:!this.state.gameOn});
+  this.setState({
+  gameOn: !this.state.gameOn,
+});
   startGameSound.play();
-  
-}
+};
+
 stopHandler=()=>{
   clearTimeout(this.timer);
   this.setState({
-    gameOver:{isGameOver:true,
+    gameOver:{
+      isGameOver:true,
       // message:message,
       
-    }})
+}
+})
   
  startGameSound.pause();
 }
@@ -105,9 +106,9 @@ render() {
       <div className="game">
         <h1>SpeedGame</h1>
         <div>
-          <Heart text={this.state.totalLives}></Heart>
+          <Heart text={this.state.totalLives}></Heart> </div>
         <span>Score:{this.state.score}</span>
-        </div>
+       
         <div className="clickcircle">
           {this.state.circles.map((circle,i)=>(
           <Circle
@@ -119,7 +120,7 @@ render() {
         ))}
         </div>
         
-        {this.state.gameOver && (
+        {this.state.gameOver.isGameOver && (
         <GameOver 
         close={this.closeHandler}
         score={this.state.score}
