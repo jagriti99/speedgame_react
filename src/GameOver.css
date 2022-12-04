@@ -1,0 +1,32 @@
+.overlay{
+    position: fixed;
+    top:0;
+    left:0;
+    background-color: rgba(0,0,0,0.5);
+    height:100%;
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay_container{
+background-color: rgba(115, 115, 233);
+position: relative;
+width:30%;
+height:40%;
+cursor:pointer;
+padding:2rem;
+border-radius: 10px;
+
+}
+
+.close{
+    position: absolute;
+    top:5px;
+    right:5px;
+    height:40px;
+    width:40px;
+    cursor:pointer;
+
+}

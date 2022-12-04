@@ -1,0 +1,13 @@
+.circle{
+    height:150px;
+    width:150px;
+    border-radius: 50%;
+    color:white;
+    background-color: #6a3edb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.active{
+    background-color: #a68fe0;
+}
