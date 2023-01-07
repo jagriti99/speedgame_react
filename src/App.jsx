@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import click from './sounds/click.wav';
-import startgame from './sounds/startgame.wav';
-
+import click from './assets/sounds/click.wav';
+import startgame from './assets/sounds/startgame.wav';
+import endgame from './assets/sounds/endSound.wav';
 
 import Circle from "./Circle";
 import GameOver from "./GameOver";
@@ -11,6 +11,7 @@ import "./App.css";
 
 let clickSound = new Audio(click);
 let startGameSound = new Audio(startgame);
+let EndGameSound = new Audio(endgame)
 
 const getRntInteger = (min, max)=>{
   return Math.floor(Math.random()*(max-min+1)) + min ;
@@ -27,7 +28,6 @@ class App extends Component {
     message:""},
     gameOn:false,
     sound:false,
-    round:0,
     mistake:0,
     totalLives:3,
   }
@@ -38,38 +38,37 @@ changeHandler=(i) => {
   clickSound.play();
   
 if (this.state.current !== i){
-  return this.stopHandler("Wrong Click");
-  ;
+   this.stopHandler("Wrong click"); 
+   return;
 }
   this.setState({
-    score: this.state.score + 1,
-    round:0
-
+    score: this.state.score + 10,
+    
   });
   this.lives = this.lives +1;
-  console.log("clicked");
 };
 
 nextCircle=()=>{ 
  if (this.state.totalLives!==this.lives){
-  return this.setState({
+   this.setState({
     totalLives:this.lives,
    }) ;
  }
  if (this.lives === 0){
-   return this.stopHandler("Ohh! out of lives");
+  this.stopHandler("Ohh! out of lives");
+  return 
  }
  
  let nextActive;
 
   do{
-    nextActive=getRntInteger(0,this.state.circles.length-1);
-  }while(nextActive === this.state.current);
+    nextActive = getRntInteger(0, this.state.circles.length-1);
+  } while (nextActive === this.state.current);
 
   this.setState({
-    current:nextActive, 
+    current: nextActive, 
     pace:this.state.pace * 0.95,
-    round:this.state.round + 1,
+    
   })
   this.lives = this.lives -1;
   this.timer=setTimeout(this.nextCircle,this.state.pace); 
@@ -83,17 +82,17 @@ startHandler=()=>{
   startGameSound.play();
 };
 
-stopHandler=()=>{
+stopHandler=(message)=>{
   clearTimeout(this.timer);
   this.setState({
     gameOver:{
       isGameOver:true,
-      // message:message,
+      message:message,
       
-}
-})
-  
+},
+}) 
  startGameSound.pause();
+ EndGameSound.play();
 }
 closeHandler =()=>{
 window.location.reload()

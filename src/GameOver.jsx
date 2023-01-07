@@ -6,7 +6,9 @@ const GameOver = (props) => {
     <div className="overlay">
       <div className="overlay_container">
         <h1>Game Over</h1>
+        <span>{props.message}</span>
         <p>Score was : {props.score}</p>
+        {props.score>5?(<p>Well played</p>):(<p>Opps..Try again</p>)}
         <button className="close" onClick={props.close}>X</button>
       </div>
     </div>

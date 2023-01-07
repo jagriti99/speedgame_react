@@ -29,3 +29,6 @@
     position: absolute;
     border-radius: 50%;
   }
+  .center {
+    position: relative;
+  }
