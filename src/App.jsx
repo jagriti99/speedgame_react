@@ -105,7 +105,9 @@ render() {
       <div className="game">
         <h1>SpeedGame</h1>
         <div>
-          <Heart text={this.state.totalLives}></Heart> </div>
+          <Heart text={this.state.totalLives}></Heart> 
+          
+          </div>
         <span>Score:{this.state.score}</span>
        
         <div className="clickcircle">
@@ -123,10 +125,10 @@ render() {
         <GameOver 
         close={this.closeHandler}
         score={this.state.score}
-        // message={this.state.gameOver.message}
+        message={this.state.gameOver.message}
         />
         ) }
-
+      
         {this.state.gameOn ? (
         <button onClick={this.stopHandler} className="btn">End game</button>):(
           <button onClick={this.startHandler} className="btn">Start game</button>
